@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>https://xlserver.al-emtiaz.net/XLWeb/default.aspx</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f5f7;
+            color: #333;
+            direction: rtl;
+        }
+
+        /* URL Bar Display */
+        .url-bar {
+            background-color: #1f2937;
+            color: #9ca3af;
+            padding: 8px 15px;
+            font-size: 13px;
+            direction: ltr;
+            text-align: left;
+            word-break: break-all;
+            border-bottom: 1px solid #374151;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .url-bar span {
+            color: #6ee7b7;
+            font-size: 10px;
+        }
+
+        /* --- LOGIN PAGE STYLES --- */
+        #login-view {
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 35px);
+            background-color: #f7fafc;
+            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+            background-size: 12px 12px;
+        }
+
+        .login-container {
+            max-width: 420px;
+            width: 90%;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo-svg {
+            width: 140px;
+            height: auto;
+        }
+
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #a0aec0;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #ffffff;
+            color: #2d3748;
+            outline: none;
+            text-align: right;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .form-control:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 1px #3182ce;
+        }
+
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%4a5568' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left 12px center;
+            background-size: 16px;
+        }
+
+        .btn-login {
+            background-color: #a3af00;
+            color: #ffffff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: fit-content;
+            margin-top: 4px;
+            transition: background 0.2s;
+        }
+
+        .btn-login:hover {
+            background-color: #8e9900;
+        }
+
+        .info-box {
+            background-color: #005691;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .info-box .icon {
+            font-size: 22px;
+            font-weight: bold;
+            font-style: italic;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .error-msg {
+            color: #e53e3e;
+            font-size: 13px;
+            display: none;
+            margin-top: 4px;
+        }
+
+        .login-footer {
+            background-color: #718096;
+            color: #ffffff;
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            width: 100%;
+            margin-top: auto;
+            direction: ltr;
+        }
+
+        /* --- RESULTS PAGE STYLES --- */
+        #results-view {
+            display: none;
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            min-height: 100vh;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .header-card {
+            background: #fff;
+            padding: 15px;
+            border-bottom: 2px solid #e5e7eb;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .user-info p {
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .avatar-box {
+            width: 70px;
+            height: 75px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f9fafb;
+        }
+
+        .avatar-box svg {
+            width: 40px;
+            height: 40px;
+            fill: #9ca3af;
+        }
+
+        .exit-bar {
+            background-color: #0b2545;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-left: 25px;
+        }
+
+        .exit-icon {
+            cursor: pointer;
+            width: 22px;
+            height: 22px;
+        }
+
+        .semester-banner {
+            background-color: #a3af00;
+            color: white;
+            padding: 10px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .percent-symbol {
+            font-size: 26px;
+            font-weight: 300;
+            opacity: 0.85;
+        }
+
+        .major-title {
+            background-color: #a3af00;
+            color: white;
+            padding: 0 12px 10px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .subject-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .subject-table tr {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .subject-table td {
+            padding: 7px 12px;
+        }
+
+        .subject-table tr.bg-gray {
+            background-color: #eeeef0;
+        }
+
+        .label-col {
+            color: #111;
+            font-weight: 600;
+            width: 45%;
+        }
+
+        .val-col {
+            color: #333;
+            text-align: center;
+            position: relative;
+        }
+
+        .val-col::before {
+            content: "|";
+            position: absolute;
+            right: 0;
+            color: #d1d5db;
+        }
+
+        .subject-table tr:nth-child(1) .val-col::before {
+            display: none;
+        }
+
+        .footer-note {
+            padding: 15px;
+            color: #d97706;
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="url-bar">
+        🔒 <span>HTTPS</span> https://xlserver.al-emtiaz.net/XLWeb/default.aspx
+    </div>
+
+    <!-- 1. LOGIN PAGE VIEW -->
+    <div id="login-view">
+        <div class="login-container">
+            <div class="logo-area">
+                <svg class="logo-svg" viewBox="0 0 200 120">
+                    <path d="M 40 80 C 70 80, 80 50, 110 50 C 140 50, 150 70, 180 70" fill="none" stroke="#0072bc" stroke-width="4"/>
+                    <path d="M 30 88 C 60 88, 75 60, 105 60 C 135 60, 145 80, 175 80" fill="none" stroke="#005691" stroke-width="3"/>
+                    <rect x="50" y="20" width="35" height="35" rx="6" fill="none" stroke="#0072bc" stroke-width="3"/>
+                    <rect x="65" y="30" width="35" height="35" rx="6" fill="none" stroke="#00aeef" stroke-width="3"/>
+                    <text x="110" y="42" font-family="sans-serif" font-weight="bold" font-size="20" fill="#0072bc">OneTree</text>
+                </svg>
+            </div>
+
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <select class="form-control" required>
+                    <option value="">حدد اسم الجامعة</option>
+                    <option value="arwa" selected>جامعة الملكة أروى</option>
+                </select>
+
+                <input type="text" id="acad_id" class="form-control" placeholder="الرقم الأكاديمي" required autocomplete="off">
+                <input type="password" id="acad_pass" class="form-control" placeholder="كلمة المرور" required>
+
+                <select class="form-control">
+                    <option value="student">طالب</option>
+                </select>
+
+                <button type="submit" class="btn-login">دخول</button>
+                <div id="error-msg" class="error-msg">الرقم الأكاديمي أو كلمة المرور غير صحيحة!</div>
+            </form>
+
+            <div class="info-box">
+                <div class="icon">i</div>
+                <p>كلمة المرور الافتراضية حسب بياناتك في النظام هي بالترتيب رقم الهوية -رقم التلفون-الرقم الأكاديمي</p>
+            </div>
+        </div>
+
+        <div class="login-footer">
+            www.al-emtiaz.net - 2025 © جميع الحقوق محفوظة
+        </div>
+    </div>
+
+    <!-- 2. RESULTS PAGE VIEW -->
+    <div id="results-view">
+        <div class="header-card">
+            <div class="header-content">
+                <div class="user-info">
+                    <p>الإسم : محمد حبيب عبده محمد عبدالرحمن</p>
+                    <p>الرقم الأكاديمي : 2024290682</p>
+                </div>
+                <div class="avatar-box">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="exit-bar">
+            <svg class="exit-icon" onclick="logout()" viewBox="0 0 24 24" fill="white">
+                <path d="M19 3H5c-1.1 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14l5-5-5-5v3H3v4h8v3z"/>
+            </svg>
+        </div>
+
+        <div class="semester-banner">
+            <span>الفصل : الفصل الخامس | العام الدراسي : 2027/2026 الفصل الأول |</span>
+            <span class="percent-symbol">%</span>
+        </div>
+        <div class="major-title">
+            التخصص : بكالوريوس علوم حاسوب
+        </div>
+
+        <!-- Subject 1 -->
+        <table class="subject-table">
+            <tr class="bg-gray"><td class="val-col">1</td><td class="label-col">م</td></tr>
+            <tr><td class="val-col">مناهج بحث علمي</td><td class="label-col">اسم المادة</td></tr>
+            <tr><td class="val-col">2</td><td class="label-col">عدد الساعات</td></tr>
+            <tr><td class="val-col">0</td><td class="label-col">الاعمال الفصلية</td></tr>
+            <tr><td class="val-col">85</td><td class="label-col">الامتحان النهائي</td></tr>
+            <tr><td class="val-col">85</td><td class="label-col">دور أول</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">دور ثاني</td></tr>
+            <tr><td class="val-col">85</td><td class="label-col">الدرجة النهائية</td></tr>
+            <tr><td class="val-col">جيد جداً</td><td class="label-col">التقدير</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">الحالة</td></tr>
+        </table>
+
+        <!-- Subject 2 -->
+        <table class="subject-table">
+            <tr class="bg-gray"><td class="val-col">2</td><td class="label-col">م</td></tr>
+            <tr><td class="val-col">برمجة مرئية</td><td class="label-col">اسم المادة</td></tr>
+            <tr><td class="val-col">3</td><td class="label-col">عدد الساعات</td></tr>
+            <tr><td class="val-col">0</td><td class="label-col">الاعمال الفصلية</td></tr>
+            <tr><td class="val-col">82</td><td class="label-col">الامتحان النهائي</td></tr>
+            <tr><td class="val-col">82</td><td class="label-col">دور أول</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">دور ثاني</td></tr>
+            <tr><td class="val-col">82</td><td class="label-col">الدرجة النهائية</td></tr>
+            <tr><td class="val-col">جيد جداً</td><td class="label-col">التقدير</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">الحالة</td></tr>
+        </table>
+
+        <!-- Subject 3 -->
+        <table class="subject-table">
+            <tr class="bg-gray"><td class="val-col">3</td><td class="label-col">م</td></tr>
+            <tr><td class="val-col">تصميم وبرمجة مواقع الانترنت (1)</td><td class="label-col">اسم المادة</td></tr>
+            <tr><td class="val-col">3</td><td class="label-col">عدد الساعات</td></tr>
+            <tr><td class="val-col">0</td><td class="label-col">الاعمال الفصلية</td></tr>
+            <tr><td class="val-col">90</td><td class="label-col">الامتحان النهائي</td></tr>
+            <tr><td class="val-col">90</td><td class="label-col">دور أول</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">دور ثاني</td></tr>
+            <tr><td class="val-col">90</td><td class="label-col">الدرجة النهائية</td></tr>
+            <tr><td class="val-col">ممتاز</td><td class="label-col">التقدير</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">الحالة</td></tr>
+        </table>
+
+        <!-- Subject 4 -->
+        <table class="subject-table">
+            <tr class="bg-gray"><td class="val-col">4</td><td class="label-col">م</td></tr>
+            <tr><td class="val-col">نظرية الحاسوب</td><td class="label-col">اسم المادة</td></tr>
+            <tr><td class="val-col">3</td><td class="label-col">عدد الساعات</td></tr>
+            <tr><td class="val-col">0</td><td class="label-col">الاعمال الفصلية</td></tr>
+            <tr><td class="val-col">71</td><td class="label-col">الامتحان النهائي</td></tr>
+            <tr><td class="val-col">71</td><td class="label-col">دور أول</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">دور ثاني</td></tr>
+            <tr><td class="val-col">71</td><td class="label-col">الدرجة النهائية</td></tr>
+            <tr><td class="val-col">جيد</td><td class="label-col">التقدير</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">الحالة</td></tr>
+        </table>
+
+        <!-- Subject 5 -->
+        <table class="subject-table">
+            <tr class="bg-gray"><td class="val-col">5</td><td class="label-col">م</td></tr>
+            <tr><td class="val-col">برمجة قواعد بيانات (2)</td><td class="label-col">اسم المادة</td></tr>
+            <tr><td class="val-col">3</td><td class="label-col">عدد الساعات</td></tr>
+            <tr><td class="val-col">0</td><td class="label-col">الاعمال الفصلية</td></tr>
+            <tr><td class="val-col">87</td><td class="label-col">الامتحان النهائي</td></tr>
+            <tr><td class="val-col">87</td><td class="label-col">دور أول</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">دور ثاني</td></tr>
+            <tr><td class="val-col">87</td><td class="label-col">الدرجة النهائية</td></tr>
+            <tr><td class="val-col">جيد جداً</td><td class="label-col">التقدير</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">الحالة</td></tr>
+        </table>
+
+        <!-- Subject 6 -->
+        <table class="subject-table">
+            <tr class="bg-gray"><td class="val-col">6</td><td class="label-col">م</td></tr>
+            <tr><td class="val-col">الاحتمالات والعمليات العشوائية</td><td class="label-col">اسم المادة</td></tr>
+            <tr><td class="val-col">3</td><td class="label-col">عدد الساعات</td></tr>
+            <tr><td class="val-col">0</td><td class="label-col">الاعمال الفصلية</td></tr>
+            <tr><td class="val-col">83</td><td class="label-col">الامتحان النهائي</td></tr>
+            <tr><td class="val-col">83</td><td class="label-col">دور أول</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">دور ثاني</td></tr>
+            <tr><td class="val-col">83</td><td class="label-col">الدرجة النهائية</td></tr>
+            <tr><td class="val-col">جيد جداً</td><td class="label-col">التقدير</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">الحالة</td></tr>
+        </table>
+
+        <!-- Subject 7 -->
+        <table class="subject-table">
+            <tr class="bg-gray"><td class="val-col">7</td><td class="label-col">م</td></tr>
+            <tr><td class="val-col">المعالمات الدقيقة ولغة التجميع</td><td class="label-col">اسم المادة</td></tr>
+            <tr><td class="val-col">3</td><td class="label-col">عدد الساعات</td></tr>
+            <tr><td class="val-col">0</td><td class="label-col">الاعمال الفصلية</td></tr>
+            <tr><td class="val-col">86</td><td class="label-col">الامتحان النهائي</td></tr>
+            <tr><td class="val-col">86</td><td class="label-col">دور أول</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">دور ثاني</td></tr>
+            <tr><td class="val-col">86</td><td class="label-col">الدرجة النهائية</td></tr>
+            <tr><td class="val-col">جيد جداً</td><td class="label-col">التقدير</td></tr>
+            <tr><td class="val-col"></td><td class="label-col">الحالة</td></tr>
+        </table>
+
+        <!-- Summary Section -->
+        <table class="subject-table" style="margin-top: 10px; border-top: 2px solid #a3af00;">
+            <tr><td class="val-col">20</td><td class="label-col">مجموع الساعات</td></tr>
+            <tr><td class="val-col">83.5</td><td class="label-col">المعدل</td></tr>
+            <tr><td class="val-col">جيد جداً</td><td class="label-col">التقدير العام</td></tr>
+            <tr><td class="val-col">ناجح</td><td class="label-col">الحالة</td></tr>
+        </table>
+
+        <div class="footer-note">
+            يحسب المعدل الفصلي بالمعادلة : مجموع(عدد ساعات المادة * درجة المادة) /
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            const id = document.getElementById('acad_id').value.trim();
+            const pass = document.getElementById('acad_pass').value.trim();
+            const errorMsg = document.getElementById('error-msg');
+
+            // Verification matching specified credentials
+            if (id === "2024290682" && pass === "770209008m") {
+                document.getElementById('login-view').style.display = 'none';
+                document.getElementById('results-view').style.display = 'block';
+                window.scrollTo(0, 0);
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function logout() {
+            document.getElementById('results-view').style.display = 'none';
+            document.getElementById('login-view').style.display = 'flex';
+            document.getElementById('acad_pass').value = '';
+            document.getElementById('error-msg').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
